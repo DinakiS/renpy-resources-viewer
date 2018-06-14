@@ -1,0 +1,9 @@
+
+.icon-sound:before { content: '\e800'; } /* '' */
+.icon-picture:before { content: '\e801'; } /* '' */
+.icon-code:before { content: '\e802'; } /* '' */
+.icon-archive:before { content: '\e803'; } /* '' */
+.icon-video:before { content: '\e804'; } /* '' */
+.icon-undefined:before { content: '\e805'; } /* '' */
+.icon-font:before { content: '\f088'; } /* '' */
+.icon-folder:before { content: '\f115'; } /* '' */

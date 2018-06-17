@@ -55,7 +55,7 @@ export default {
   },
   extractFile (archive, file, out) {
     return new Promise((resolve, reject) => {
-      const rpatool = path.join(__dirname, '..', 'assets', '/rpatool.py')
+      const rpatool = path.join(__static, '/rpatool.py')
 
       PythonShell.run(rpatool, {
         args: ['-x', path.normalize(archive), `${path.join(out, file.basename)}=${path.normalize(file.basename)}`]

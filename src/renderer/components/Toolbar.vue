@@ -48,10 +48,10 @@ export default {
       }
 
       &.open {
-        background-image: url(/src/renderer/assets/toolbar/open.png);
+        background-image: url('~@/assets/toolbar/open.png');
       }
       &.save {
-        background-image: url(/src/renderer/assets/toolbar/save.png);
+        background-image: url('~@/assets/toolbar/save.png');
       }
     }
   }

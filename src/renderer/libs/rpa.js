@@ -60,7 +60,7 @@ export default {
       PythonShell.run(rpatool, {
         args: ['-x', path.normalize(archive), `${path.join(out, file.basename)}=${path.normalize(file.basename)}`]
       }, (err, result) => {
-        if (err) return reject(err)
+        if (err) throw err
         resolve(path.join(out, file.basename))
       })
     })

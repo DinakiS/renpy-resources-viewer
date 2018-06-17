@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <h2 style='font-family: demoFont;'>{{file}}</h2>
+  <div class='show-font'>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et dolor diam. Nullam at orci commodo, pulvinar velit at, semper elit.
+    Ut porta tincidunt magna, quis commodo elit tristique in. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+    Quisque varius odio faucibus felis varius vulputate. Sed molestie tempor sem, et eleifend ipsum imperdiet vel. Curabitur massa massa, malesuada quis accumsan at,
+    eleifend ut erat. Vestibulum nec euismod mi, ac tincidunt leo. Sed nisi nibh, blandit sed dolor varius, dignissim pretium sapien. Praesent in velit tempor, congue ex ac,
+    eleifend justo. Pellentesque varius eget mauris vitae laoreet.
   </div>
 </template>
 
@@ -43,3 +47,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .show-font {
+    font-family: demoFont;
+    padding: 20px;
+    line-height: 1.8rem;
+    font-size: 1.5rem;
+  }
+</style>

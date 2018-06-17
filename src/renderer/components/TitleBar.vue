@@ -45,10 +45,6 @@ export default {
 <style lang="scss" scoped>
   .titlebar {
     -webkit-app-region: drag;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 1;
     padding: 3px;
     font-family: 'Courier New', Courier, monospace;
     text-align: center;

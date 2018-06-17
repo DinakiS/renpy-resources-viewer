@@ -9,7 +9,7 @@ export default {
       PythonShell.run(rpatool, {
         args: ['-c', path.normalize(filePath)]
       }, (err, result) => {
-        if (err) return reject(err)
+        if (err) throw err
         resolve(filePath.replace('.rpyc', '.rpy'))
       })
     })

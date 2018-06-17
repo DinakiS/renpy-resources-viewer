@@ -1,4 +1,6 @@
 import { remote } from 'electron'
+import path from 'upath'
+import fs from 'fs'
 
 const dialog = remote.dialog
 
@@ -32,6 +34,18 @@ const actions = {
         commit('setFiles', {})
         commit('setGameDir', dirPaths[0])
       }
+    })
+  },
+  extractFile ({ state }) {
+    if (!state.currentFile) return
+    let fileName = path.basename(state.currentFile)
+    dialog.showSaveDialog({
+      title: `Extract file ${fileName}`,
+      defaultPath: fileName
+    }, filename => {
+      if (!filename) return
+
+      fs.createReadStream(state.currentFile).pipe(fs.createWriteStream(filename))
     })
   }
 }

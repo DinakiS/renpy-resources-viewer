@@ -38,6 +38,8 @@
       currentFile (val) {
         if (val) {
           this.show(val)
+        } else {
+          this.fileType = null
         }
       }
     },
@@ -46,6 +48,8 @@
         if (filePath.endsWith('rpyc')) {
           rpyc.convertToRpy(filePath).then(newPath => {
             this.$store.commit('showFile', newPath)
+          }).catch(err => {
+            throw new Error(err.message)
           })
         } else {
           this.fileType = utils.fileType(filePath)
@@ -57,9 +61,6 @@
 
 <style>
 #content {
-  overflow-y: auto;
-  flex-grow: 2;
-  grid-column: 2;
-  grid-row: 2;
+  overflow-y: auto
 }
 </style>

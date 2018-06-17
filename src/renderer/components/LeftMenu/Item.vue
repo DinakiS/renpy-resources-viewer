@@ -83,6 +83,8 @@ export default {
           Object.assign(this.file, archiveContent)
 
           this.open = true
+        }).catch(err => {
+          throw new Error(err.message)
         })
       } else if (this.isFolder) {
         this.open = true
@@ -95,6 +97,8 @@ export default {
 
         rpa.extractFile(archivePath, file, tmp).then(filePath => {
           this.$store.commit('showFile', filePath)
+        }).catch(err => {
+          throw new Error(err.message)
         })
       } else {
         this.$store.commit('showFile', file.archivePath)

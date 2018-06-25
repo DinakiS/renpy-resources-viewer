@@ -27,7 +27,6 @@ import glob
 import itertools
 import traceback
 import struct
-from multiprocessing import Pool, Lock, cpu_count
 from operator import itemgetter
 
 import decompiler
@@ -53,8 +52,6 @@ class PyCode(magic.FakeStrict):
         self.bytecode = None
 
 class_factory = magic.FakeClassFactory((PyExpr, PyCode), magic.FakeStrict)
-
-printlock = Lock()
 
 # API
 
@@ -85,12 +82,11 @@ def decompile_rpyc(input_filename, overwrite=False, dump=False, decompile_python
     filepath, ext = path.splitext(input_filename)
     out_filename = filepath + ('.txt' if dump else '.rpy')
 
-    with printlock:
-        print "Decompiling %s to %s..." % (input_filename, out_filename)
+    print "Decompiling %s to %s..." % (input_filename, out_filename)
 
-        if not overwrite and path.exists(out_filename):
-            print "Output file already exists. Pass --clobber to overwrite."
-            return False # Don't stop decompiling if one file already exists
+    if not overwrite and path.exists(out_filename):
+        print "Output file already exists. Pass --clobber to overwrite."
+        return False # Don't stop decompiling if one file already exists
 
     with open(input_filename, 'rb') as in_file:
         ast = read_ast_from_file(in_file)
@@ -100,13 +96,12 @@ def decompile_rpyc(input_filename, overwrite=False, dump=False, decompile_python
             astdump.pprint(out_file, ast, decompile_python=decompile_python, comparable=comparable,
                                           no_pyexpr=no_pyexpr)
         else:
-            decompiler.pprint(out_file, ast, decompile_python=decompile_python, printlock=printlock,
+            decompiler.pprint(out_file, ast, decompile_python=decompile_python,
                                              translator=translator, init_offset=init_offset)
     return True
 
 def extract_translations(input_filename, language):
-    with printlock:
-        print "Extracting translations from %s..." % input_filename
+    print "Extracting translations from %s..." % input_filename
 
     with open(input_filename, 'rb') as in_file:
         ast = read_ast_from_file(in_file)
@@ -130,14 +125,9 @@ def worker(t):
             return decompile_rpyc(filename, args.clobber, args.dump, decompile_python=args.decompile_python,
                                   no_pyexpr=args.no_pyexpr, comparable=args.comparable, translator=translator, init_offset=args.init_offset)
     except Exception as e:
-        with printlock:
-            print "Error while decompiling %s:" % filename
-            print traceback.format_exc()
+        print "Error while decompiling %s:" % filename
+        print traceback.format_exc()
         return False
-
-def sharelock(lock):
-    global printlock
-    printlock = lock
 
 def main():
     # python27 unrpyc.py [-c] [-d] [--python-screens|--ast-screens|--no-screens] file [file ...]
@@ -149,7 +139,7 @@ def main():
     parser.add_argument('-d', '--dump', dest='dump', action='store_true',
                         help="instead of decompiling, pretty print the ast to a file")
 
-    parser.add_argument('-p', '--processes', dest='processes', action='store', default=cpu_count(),
+    parser.add_argument('-p', '--processes', dest='processes', action='store', default=1,
                         help="use the specified number of processes to decompile")
 
     parser.add_argument('-t', '--translation-file', dest='translation_file', action='store', default=None,
@@ -221,16 +211,8 @@ def main():
 
     files = map(lambda x: (args, x, path.getsize(x)), files)
     processes = int(args.processes)
-    if processes > 1:
-        # If a big file starts near the end, there could be a long time with
-        # only one thread running, which is inefficient. Avoid this by starting
-        # big files first.
-        files.sort(key=itemgetter(2), reverse=True)
-        results = Pool(int(args.processes), sharelock, [printlock]).map(worker, files, 1)
-    else:
-        # Decompile in the order Ren'Py loads in
-        files.sort(key=itemgetter(1))
-        results = map(worker, files)
+    files.sort(key=itemgetter(1))
+    results = map(worker, files)
 
     if args.write_translation_file:
         print "Writing translations to %s..." % args.write_translation_file

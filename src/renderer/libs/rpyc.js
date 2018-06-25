@@ -2,13 +2,23 @@ import PythonShell from 'python-shell'
 import path from 'upath'
 
 export default {
-  convertToRpy (filePath) {
+  convertToRpy (filePath, store) {
     return new Promise((resolve, reject) => {
-      const rpatool = path.join(__static, 'unrpyc', 'unrpyc.py')
+      const unrpyc = path.join(__static, 'unrpyc', 'unrpyc.py')
 
-      PythonShell.run(rpatool, {
-        args: ['-c', path.normalize(filePath)]
-      }, (err, result) => {
+      let config = {
+        args: ['-c', path.normalize(filePath)],
+        pythonPath: 'python'
+      }
+
+      if (store.config.useRenpyPython) {
+        // let pathsep = require('os').platform().match(/win/) ? ';' : ':'
+
+        config.pythonPath = path.join(store.files.gameDir, store.config.pythonPath)
+        config.pythonOptions = ['-OO']
+      }
+
+      PythonShell.run(unrpyc, config, (err, result) => {
         if (err) throw err
         resolve(filePath.replace('.rpyc', '.rpy'))
       })

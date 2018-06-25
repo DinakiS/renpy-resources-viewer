@@ -46,7 +46,7 @@
     methods: {
       show (filePath) {
         if (filePath.endsWith('rpyc')) {
-          rpyc.convertToRpy(filePath).then(newPath => {
+          rpyc.convertToRpy(filePath, this.$store.state).then(newPath => {
             this.$store.commit('showFile', newPath)
           }).catch(err => {
             throw new Error(err.message)

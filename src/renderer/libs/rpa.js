@@ -53,13 +53,21 @@ export default {
       })
     })
   },
-  extractFile (archive, file, out) {
+  extractFile (archive, file, out, store) {
     return new Promise((resolve, reject) => {
       const rpatool = path.join(__static, '/rpatool.py')
 
-      PythonShell.run(rpatool, {
-        args: ['-x', path.normalize(archive), `${path.join(out, file.basename)}=${path.normalize(file.basename)}`]
-      }, (err, result) => {
+      let config = {
+        args: ['-x', path.normalize(archive), `${path.join(out, file.basename)}=${path.normalize(file.basename)}`],
+        pythonPath: 'python'
+      }
+
+      if (store.config.useRenpyPython) {
+        config.pythonPath = path.join(store.files.gameDir, store.config.pythonPath)
+        config.pythonOptions = ['-OO']
+      }
+
+      PythonShell.run(rpatool, config, (err, result) => {
         if (err) throw err
         resolve(path.join(out, file.basename))
       })

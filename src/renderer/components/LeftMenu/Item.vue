@@ -95,7 +95,7 @@ export default {
         let archivePath = this.$store.state.files.files[file.archive].archivePath
         let tmp = path.join(os.tmpdir(), 'renpy-reader', file.archive)
 
-        rpa.extractFile(archivePath, file, tmp).then(filePath => {
+        rpa.extractFile(archivePath, file, tmp, this.$store.state).then(filePath => {
           this.$store.commit('showFile', filePath)
         }).catch(err => {
           throw new Error(err.message)

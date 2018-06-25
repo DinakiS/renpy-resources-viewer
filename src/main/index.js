@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
+import fs from 'fs'
 
 /**
  * Set `__static` path to static files in production
@@ -49,3 +50,23 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+app.on('quit', () => {
+  const tempFolder = require('path').join(require('os').tmpdir(), 'renpy-reader')
+  deleteFolderRecursive(tempFolder)
+})
+
+function deleteFolderRecursive (path) {
+  if (fs.existsSync(path)) {
+    fs.readdirSync(path).forEach((file, index) => {
+      var curPath = `${path}/${file}`
+
+      if (fs.lstatSync(curPath).isDirectory()) {
+        deleteFolderRecursive(curPath)
+      } else {
+        fs.unlinkSync(curPath)
+      }
+    })
+    fs.rmdirSync(path)
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "renpy-resources-viewer",
   "productName": "Ren'Py Resources Viewer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Dinaki",
   "description": "Program to open .rpa, rpy and .rpyc files",
   "license": null,

@@ -27,6 +27,8 @@ function createWindow () {
     webPreferences: {
       webSecurity: false
     },
+    minWidth: 800,
+    minHeight: 600,
     frame: false
   })
 

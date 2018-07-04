@@ -2,6 +2,7 @@
   <div class='toolbar'>
     <button class='btn open' @click="selectGameDir" title="Select game folder"></button>
     <button class='btn save' @click="extractFile" title="Extract file"></button>
+    <button class='btn settings' @click="openSettings" title="Settings"></button>
   </div>
 </template>
 
@@ -13,6 +14,9 @@ export default {
     },
     extractFile () {
       this.$store.dispatch('extractFile')
+    },
+    openSettings () {
+      this.$store.commit('toggleSettings')
     }
   }
 }
@@ -52,6 +56,9 @@ export default {
       }
       &.save {
         background-image: url('~@/assets/toolbar/save.png');
+      }
+      &.settings {
+        background-image: url('~@/assets/toolbar/settings.png');
       }
     }
   }

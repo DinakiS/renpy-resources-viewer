@@ -5,6 +5,7 @@
     <left-menu id="left-menu"></left-menu>
     <page-content id="content"></page-content>
     <log :errors="errors" @hide="showLog = false" v-show="showLog"/>
+    <settings v-if="$store.state.config.showSettings"/>
   </div>
 </template>
 
@@ -14,10 +15,11 @@
   import LeftMenu from './components/LeftMenu.vue'
   import PageContent from './components/PageContent.vue'
   import Log from './components/Log.vue'
+  import Settings from './components/Settings.vue'
 
   export default {
     name: 'renpy-reader-electron',
-    components: { LeftMenu, PageContent, Titlebar, Toolbar, Log },
+    components: { LeftMenu, PageContent, Titlebar, Toolbar, Log, Settings },
     data () {
       return {
         showLog: false,
@@ -29,6 +31,8 @@
         this.errors.push(err)
         this.showLog = true
       }
+
+      this.$store.dispatch('defaultPythonPath')
     }
   }
 </script>

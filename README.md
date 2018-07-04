@@ -20,9 +20,12 @@ npm run lint
 
 ```
 
+#### TODO
+* Сохранять настройки в файл
+
 #### Fixme
-* Некоторые папки считаются файлами. Например: 1.base, 2.body, 3.eyes
-* Python error: `UnicodeDecodeError: 'utf8' codec can't decode byte 0xcb in position 19: invalid continuation byte`
+* Некоторые папки, в названии которых есть точки, считаются файлами. Например: 1.base, 2.body, 3.eyes
+* Python error: `UnicodeDecodeError: 'utf8' codec can't decode byte 0xcb in position 19: invalid continuation byte` (Скорее всего старый формат rpyc или rpa)
 
 ---
 

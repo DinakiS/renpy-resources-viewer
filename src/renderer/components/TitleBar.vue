@@ -7,8 +7,8 @@
       <span class='icon-window-maximize' @click="maximize"></span>
       <span class='icon-window-close' @click="close"></span>
       -->
-      <span class='circle maximize' title='Maximize window' @click="maximize"></span>
       <span class='circle minimize' title='Minimize window' @click="minimize"></span>
+      <span class='circle maximize' title='Maximize window' @click="maximize"></span>
       <span class='circle close' title='Close window' @click="close"></span>
     </div>
   </div>

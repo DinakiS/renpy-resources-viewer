@@ -2,6 +2,13 @@
 
 > Open .rpa, rpy and .rpyc files.
 
+#### Screenshots
+![Alt text](pics/1_1.jpg)
+![Alt text](pics/2_2.jpg)
+![Alt text](pics/3_3.jpg)
+![Alt text](pics/4_4.jpg)
+![Alt text](pics/5_5.jpg)
+
 #### Build Setup
 
 ``` bash

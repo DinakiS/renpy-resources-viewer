@@ -78,14 +78,6 @@ export default {
           width: 50%;
           text-align: right;
         }
-
-        input {
-          padding: 5px 10px;
-          background: rgba(255, 255, 255, 0.11);
-          border: 2px solid #7b7b7b;
-          color: #fff;
-          border-radius: 5px;
-        }
       }
 
       .buttons {

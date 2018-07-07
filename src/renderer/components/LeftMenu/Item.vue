@@ -49,8 +49,7 @@ export default {
       }
     },
     isFolder () {
-      // FIXME: Некоторые папки считаются файлами. Например 1.base, 2.cookies
-      return !path.extname(this.name) || !this.name.match(/\..{3,4}$/)
+      return !path.extname(this.name) || !this.file.info
     },
     itemType () {
       let type = utils.fileType(this.name)

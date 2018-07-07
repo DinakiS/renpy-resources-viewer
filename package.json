@@ -25,6 +25,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "jpickle": "^0.4.1",
+    "prismjs": "^1.15.0",
     "python-shell": "^0.5.0",
     "recursive-readdir": "^2.2.2",
     "upath": "^1.1.0",
@@ -39,6 +40,7 @@
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
+    "babel-plugin-prismjs": "^1.0.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-0": "^6.24.1",

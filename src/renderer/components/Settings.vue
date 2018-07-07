@@ -9,6 +9,10 @@
         <div>Use system python</div>
         <input type="checkbox" v-model="systemPython">
       </div>
+      <div class="block">
+        <div>Highlight code</div>
+        <input type="checkbox" v-model="highlightCode">
+      </div>
 
       <div class='buttons'>
         <button @click="$store.commit('toggleSettings')">Close</button>
@@ -34,6 +38,14 @@ export default {
       },
       set (val) {
         this.$store.commit('setUseRenpyPython', !val)
+      }
+    },
+    highlightCode: {
+      get () {
+        return this.$store.state.config.highlightCode
+      },
+      set () {
+        this.$store.commit('toggleHighlight')
       }
     }
   }

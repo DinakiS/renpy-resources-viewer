@@ -3,7 +3,8 @@ import os from 'os'
 const state = {
   useRenpyPython: true,
   pythonPath: 'lib/windows-i686/python.exe',
-  showSettings: false
+  showSettings: false,
+  highlightCode: true
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
   },
   toggleSettings (state) {
     state.showSettings = !state.showSettings
+  },
+  toggleHighlight (state) {
+    state.highlightCode = !state.highlightCode
   }
 }
 

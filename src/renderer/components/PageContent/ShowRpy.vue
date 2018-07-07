@@ -43,7 +43,11 @@ export default {
         if (err) throw err
 
         this.code_text = data
+        if (this.$store.state.config.highlightCode) {
         this.code = Prism.highlight(data, Prism.languages.renpy, 'renpy')
+        } else {
+          this.code = data
+        }
         this.loading = false
       })
     }

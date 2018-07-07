@@ -25,6 +25,7 @@
 <script>
 import os from 'os'
 import path from 'path'
+import fs from 'fs'
 
 import rpa from '../../libs/rpa'
 import treeify from '../../libs/treeify'
@@ -92,8 +93,20 @@ export default {
     },
     show (file) {
       if (!file.archivePath) {
-        let archivePath = this.$store.state.files.files[file.archive].archivePath
-        let tmp = path.join(os.tmpdir(), 'renpy-reader', file.archive)
+        const archivePath = this.$store.state.files.files[file.archive].archivePath
+        const tmp = path.join(os.tmpdir(), 'renpy-reader', file.archive)
+        const outPath = path.join(tmp, file.basename)
+
+        if (fs.existsSync(outPath)) {
+          if (path.extname(outPath) === '.rpyc') {
+            const rpyPath = outPath.replace('.rpyc', '.rpy')
+
+            if (fs.existsSync(rpyPath)) {
+              return this.$store.commit('showFile', rpyPath)
+            }
+          }
+          return this.$store.commit('showFile', outPath)
+        }
 
         rpa.extractFile(archivePath, file, tmp, this.$store.state).then(filePath => {
           this.$store.commit('showFile', filePath)

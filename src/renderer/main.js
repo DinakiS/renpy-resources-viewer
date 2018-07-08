@@ -4,8 +4,10 @@ import axios from 'axios'
 import App from './App'
 import store from './store'
 import VueHotkey from 'v-hotkey'
+import VTooltip from 'v-tooltip'
 
 Vue.use(VueHotkey)
+Vue.use(VTooltip)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios

@@ -1,8 +1,8 @@
 <template>
   <div class='toolbar'>
-    <button class='btn open' @click="selectGameDir" title="Select game folder"></button>
-    <button class='btn save' @click="extractFile" title="Extract file"></button>
-    <button class='btn settings' @click="openSettings" title="Settings"></button>
+    <button class='btn open' @click="selectGameDir" v-tooltip="{ content: 'Select game folder', placement: 'bottom' }"></button>
+    <button class='btn save' @click="extractFile" v-tooltip="{ content: 'Extract file', placement: 'bottom' }"></button>
+    <button class='btn settings' @click="openSettings" v-tooltip="{ content: 'Settings', placement: 'bottom' }"></button>
   </div>
 </template>
 

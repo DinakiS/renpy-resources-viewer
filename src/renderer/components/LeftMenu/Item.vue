@@ -24,7 +24,7 @@
 
 <script>
 import os from 'os'
-import path from 'path'
+import path from 'upath'
 import fs from 'fs'
 
 import rpa from '../../libs/rpa'
@@ -45,7 +45,9 @@ export default {
       return {
         file: this.file.info,
         [type]: true,
-        active: this.$store.state.files.currentFile && this.file.basename && this.$store.state.files.currentFile.match(this.file.basename.replace('.rpyc', '.rpy'))
+        active: this.$store.state.files.currentFile &&
+                this.file.basename &&
+                this.$store.state.files.currentFile.match(this.file.basename.replace('.rpyc', '.rpy'))
       }
     },
     isFolder () {

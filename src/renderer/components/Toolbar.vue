@@ -2,12 +2,46 @@
   <div class='toolbar'>
     <button class='btn open' @click="selectGameDir" v-tooltip="{ content: 'Select game folder', placement: 'bottom' }"></button>
     <button class='btn save' @click="extractFile" v-tooltip="{ content: 'Extract file', placement: 'bottom' }"></button>
+    <div class='separator'></div>
+    <button
+      class='btn console'
+      v-if="$store.state.files.gameDir"
+      v-tooltip="{ content: consoleTooltip, placement: 'bottom' }"
+      @click="toggleConsole"
+      >
+    </button>
     <button class='btn settings' @click="openSettings" v-tooltip="{ content: 'Settings', placement: 'bottom' }"></button>
   </div>
 </template>
 
 <script>
+import fs from 'fs'
+import path from 'upath'
+
 export default {
+  data () {
+    return {
+      consoleStatus: 'Disabled'
+    }
+  },
+  computed: {
+    consoleTooltip () {
+      return `
+        Toggle console in the game<br>
+        Shift + O to open
+        <br><br>
+        Current status: ${this.consoleStatus}
+      `
+    },
+    gameDir () {
+      return this.$store.state.files.gameDir
+    }
+  },
+  watch: {
+    gameDir (val) {
+      if (val) this.getConsoleStatus()
+    }
+  },
   methods: {
     selectGameDir () {
       this.$store.dispatch('changeGameDir')
@@ -17,6 +51,35 @@ export default {
     },
     openSettings () {
       this.$store.commit('toggleSettings')
+    },
+    toggleConsole () {
+      let fileContent = this.getConsoleFile()
+      if (fileContent) {
+        if (fileContent.includes('config.console = True')) {
+          fileContent = fileContent.replace('config.console = True', 'config.console = False')
+          this.consoleStatus = 'Disabled'
+        } else if (fileContent.includes('config.console = False')) {
+          fileContent = fileContent.replace('config.console = False', 'config.console = True')
+          this.consoleStatus = 'Enabled'
+        }
+
+        fs.writeFileSync(path.join(this.$store.state.files.gameDir, 'renpy', 'common', '00console.rpy'), fileContent, 'utf8')
+      }
+    },
+    getConsoleStatus () {
+      const fileContent = this.getConsoleFile()
+      if (fileContent) {
+        this.consoleStatus = fileContent.includes('config.console = True') ? 'Enabled' : 'Disabled'
+        return
+      }
+      this.consoleStatus = 'Unknown'
+    },
+    getConsoleFile () {
+      const consoleFile = path.join(this.$store.state.files.gameDir, 'renpy', 'common', '00console.rpy')
+      if (fs.existsSync(consoleFile)) {
+        return fs.readFileSync(consoleFile, 'utf8')
+      }
+      return null
     }
   }
 }
@@ -55,11 +118,21 @@ export default {
         background-image: url('~@/assets/toolbar/open.png');
       }
       &.save {
-        background-image: url('~@/assets/toolbar/save.png');
+        background-image: url('~@/assets/toolbar/extract.png');
+      }
+      &.console {
+        background-image: url('~@/assets/toolbar/terminal.png');
       }
       &.settings {
         background-image: url('~@/assets/toolbar/settings.png');
+        margin-left: auto;
       }
+    }
+
+    .separator {
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      height: 100%;
+      margin: 0 10px;
     }
   }
 </style>

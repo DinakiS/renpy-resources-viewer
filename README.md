@@ -29,13 +29,14 @@ npm run lint
 
 #### TODO
 * Сохранять настройки в файл
-* Поиск по файлу с кодом
 * Поиск по всем файлам ??
 * Сделать кнопку для включения консоли в игре
+* Редактировать и сохранять скрипты
+* Редактор сохранений ??
 
 #### Fixme
-* Некоторые папки, в названии которых есть точки, считаются файлами. Например: 1.base, 2.body, 3.eyes
 * Python error: `UnicodeDecodeError: 'utf8' codec can't decode byte 0xcb in position 19: invalid continuation byte` (Скорее всего старый формат rpyc или rpa)
+* Witches не конвертируется файл `scripts.rpa/scripts/intro/intro_2/intro_2_ch0_dialogue.rpyc`
 
 ---
 

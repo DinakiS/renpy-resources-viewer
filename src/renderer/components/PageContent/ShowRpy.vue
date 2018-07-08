@@ -1,5 +1,7 @@
 <template>
-  <div v-if="loading" class='loading'></div>
+  <div v-if="loading" class='loading'>
+    Loading...
+  </div>
   <div v-else class="rpy-code" v-hotkey="keymap">
     <search class='search' v-if="showSearch"/>
     <pre v-html="code"></pre>
@@ -81,11 +83,6 @@ export default {
       position: fixed;
       top: 70px;
       right: 13px;
-    }
-    pre {
-      span.search-highlight {
-        background-color: rgba(125, 171, 255, 0.4);
-      }
     }
   }
 </style>

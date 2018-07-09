@@ -1,23 +1,20 @@
 export default function (files, archiveName) {
   var fileTree = {}
 
-  /*
-  if (files instanceof Array === false) {
-    throw new Error('Expected an Array of file paths, but saw ' + files)
-  }
-  */
-
   function mergePathsIntoFileTree (prevDir, currDir, i, filePath) {
     if (i === filePath.length - 1) {
       prevDir[currDir] = {
         info: files[filePath.join('/')],
         basename: filePath.join('/'),
-        archive: archiveName
+        archive: archiveName,
+        type: 'file'
       }
     }
 
     if (!prevDir.hasOwnProperty(currDir)) {
-      prevDir[currDir] = {}
+      prevDir[currDir] = {
+        type: 'folder'
+      }
     }
     return prevDir[currDir]
   }
@@ -30,7 +27,8 @@ export default function (files, archiveName) {
       return (fileTree[fileLocation[0]] = {
         info: files[filePath],
         basename: filePath,
-        archive: archiveName
+        archive: archiveName,
+        type: 'file'
       })
     }
 

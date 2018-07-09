@@ -4,7 +4,7 @@
 
     <show-image v-if="fileType === 'picture'" :file="currentFile"></show-image>
     <show-sound v-if="fileType === 'sound'" :file="currentFile"></show-sound>
-    <show-rpy v-if="fileType === 'code'" :file="currentFile"></show-rpy>
+    <show-code v-if="fileType === 'code'" :file="currentFile"/>
     <show-font v-if="fileType === 'font'" :file="currentFile"></show-font>
   </div>
 </template>
@@ -14,13 +14,13 @@
   import ShowImage from './PageContent/ShowImage.vue'
   import ShowSound from './PageContent/ShowSound.vue'
   import ShowFont from './PageContent/ShowFont.vue'
-  import ShowRpy from './PageContent/ShowRpy.vue'
+  import ShowCode from './PageContent/ShowCode.vue'
   import rpyc from '../libs/rpyc'
   import utils from '../utils'
 
   export default {
     name: 'game-content',
-    components: { SelectGameDir, ShowImage, ShowSound, ShowFont, ShowRpy },
+    components: { SelectGameDir, ShowImage, ShowSound, ShowFont, ShowCode },
     data () {
       return {
         fileType: null

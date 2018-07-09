@@ -51,7 +51,7 @@ export default {
       }
     },
     isFolder () {
-      return !path.extname(this.name) || !this.file.info
+      return !path.extname(this.name) || (!this.file.info && Object.keys(this.file).length > 1)
     },
     itemType () {
       let type = utils.fileType(this.name)

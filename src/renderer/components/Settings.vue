@@ -1,6 +1,10 @@
 <template>
   <div class='settings-modal'>
     <div class='settings'>
+      <div class="block version">
+        <div>App version</div>
+        <div>v{{version}} (<a href="https://github.com/DinakiS/renpy-resources-viewer">GitHub</a>)</div>
+      </div>
       <div class="block" v-if="!systemPython">
         <div>Python path (in the game folder)</div>
         <input type="text" v-model="pythonPath">
@@ -18,7 +22,14 @@
 </template>
 
 <script>
+import { remote } from 'electron'
+
 export default {
+  data () {
+    return {
+      version: remote.app.getVersion()
+    }
+  },
   computed: {
     pythonPath: {
       get () {
@@ -73,6 +84,13 @@ export default {
         display: inline-flex;
         margin-top: 10px;
         width: 100%;
+
+        &.version {
+          margin-bottom: 15px;
+          a {
+            color: #4eb72d;
+          }
+        }
 
         div:nth-child(1) {
           margin-right: 15px;

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import { shell } from 'electron'
 
 import App from './App'
 import store from './store'
@@ -19,3 +20,10 @@ new Vue({
   store,
   template: '<App/>'
 }).$mount('#app')
+
+document.addEventListener('click', function (event) {
+  if (event.target.tagName === 'A' && event.target.href.startsWith('http')) {
+    event.preventDefault()
+    shell.openExternal(event.target.href)
+  }
+})

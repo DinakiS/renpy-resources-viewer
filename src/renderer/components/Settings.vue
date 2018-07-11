@@ -47,6 +47,7 @@ export default {
     width: 500px;
     margin-left: 50%;
     transform: translateX(-50%);
+    z-index: 1;
 
     .overlay {
       display: block;

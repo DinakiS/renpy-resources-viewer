@@ -30,9 +30,9 @@ npm run lint
 #### TODO
 * Сохранять настройки в файл
 * Поиск по всем файлам ??
-* Сделать кнопку для включения консоли в игре
 * Редактировать и сохранять скрипты
 * Редактор сохранений ??
+* Extract all
 
 #### Fixme
 * Python error: `UnicodeDecodeError: 'utf8' codec can't decode byte 0xcb in position 19: invalid continuation byte` (Скорее всего старый формат rpyc или rpa)

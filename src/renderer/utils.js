@@ -13,7 +13,7 @@ export default {
     if (['.webm', '.mkv', '.avi', '.mp4'].includes(ext)) {
       return 'video'
     }
-    if (['.rpy', '.rpyc'].includes(ext)) {
+    if (['.rpy', '.rpyc', '.json', '.txt', '.xml', '.hxml'].includes(ext)) {
       return 'code'
     }
     if (['.otf', '.ttf'].includes(ext)) {

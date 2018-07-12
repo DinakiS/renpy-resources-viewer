@@ -34,10 +34,8 @@ export default {
     },
     keymap () {
       return {
-        up: this.prevFile,
         left: this.prevFile,
-        right: this.nextFile,
-        down: this.nextFile
+        right: this.nextFile
       }
     }
   },
@@ -80,19 +78,19 @@ export default {
       })
     },
     prevFile () {
-      console.log('prev')
-      /*
-      let fPath = this.$store.state.files.currentFile.replace(/.*?renpy-reader\//, '')
-      let splitPath = fPath.split('/')
-
-      if (splitPath.length === 2) {
-        this.$store.state.files.files[splitPath[0]]
+      const currFile = document.querySelector('.tree-item.active')
+      if (currFile) {
+        const prevFile = currFile.previousElementSibling
+        prevFile && prevFile.children.length && prevFile.children[0].click()
       }
-      console.log(fPath)
-      */
     },
     nextFile () {
-      console.log('next')
+      const currFile = document.querySelector('.tree-item.active')
+
+      if (currFile) {
+        const nextFile = currFile.nextElementSibling
+        nextFile && nextFile.children.length && nextFile.children[0].click()
+      }
     }
   }
 }

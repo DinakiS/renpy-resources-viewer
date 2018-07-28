@@ -30,6 +30,7 @@ import fs from 'fs'
 import rpa from '../../libs/rpa'
 import treeify from '../../libs/treeify'
 import utils from '../../utils'
+import rpyc from '../../libs/rpyc'
 
 export default {
   name: 'menu-item',
@@ -95,7 +96,8 @@ export default {
     show (file) {
       if (!file.archivePath) {
         const archivePath = this.$store.state.files.files[file.archive].archivePath
-        const tmp = path.join(os.tmpdir(), 'renpy-reader', file.archive)
+        const gameFolderName = path.basename(this.$store.state.files.gameDir)
+        const tmp = path.join(os.tmpdir(), 'renpy-reader', gameFolderName, file.archive)
         const outPath = path.join(tmp, file.basename)
 
         if (fs.existsSync(outPath)) {
@@ -110,7 +112,15 @@ export default {
         }
 
         rpa.extractFile(archivePath, file, tmp, this.$store.state).then(filePath => {
-          this.$store.commit('showFile', filePath)
+          if (filePath.endsWith('rpyc')) {
+            rpyc.convertToRpy(filePath, this.$store.state).then(newPath => {
+              this.$store.commit('showFile', newPath)
+            }).catch(err => {
+              throw new Error(err.message)
+            })
+          } else {
+            this.$store.commit('showFile', filePath)
+          }
         }).catch(err => {
           throw new Error(err.message)
         })

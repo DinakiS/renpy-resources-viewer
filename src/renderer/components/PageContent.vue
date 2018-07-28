@@ -15,7 +15,6 @@
   import ShowSound from './PageContent/ShowSound.vue'
   import ShowFont from './PageContent/ShowFont.vue'
   import ShowCode from './PageContent/ShowCode.vue'
-  import rpyc from '../libs/rpyc'
   import utils from '../utils'
 
   export default {
@@ -45,15 +44,7 @@
     },
     methods: {
       show (filePath) {
-        if (filePath.endsWith('rpyc')) {
-          rpyc.convertToRpy(filePath, this.$store.state).then(newPath => {
-            this.$store.commit('showFile', newPath)
-          }).catch(err => {
-            throw new Error(err.message)
-          })
-        } else {
-          this.fileType = utils.fileType(filePath)
-        }
+        this.fileType = utils.fileType(filePath)
       }
     }
   }

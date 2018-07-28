@@ -12,8 +12,6 @@ export default {
       }
 
       if (store.config.useRenpyPython) {
-        // let pathsep = require('os').platform().match(/win/) ? ';' : ':'
-
         config.pythonPath = path.join(store.files.gameDir, store.config.pythonPath)
         config.pythonOptions = ['-OO']
       }

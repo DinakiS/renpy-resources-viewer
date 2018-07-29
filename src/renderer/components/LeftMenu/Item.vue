@@ -77,7 +77,7 @@ export default {
       }
     },
     expand () {
-      if (this.name.endsWith('rpa') && !this.file.children) {
+      if (this.name.endsWith('rpa')) {
         rpa.getIndex(this.file.archivePath).then(result => {
           let archiveContent = sortFiles(treeify(result.index, this.name))
 

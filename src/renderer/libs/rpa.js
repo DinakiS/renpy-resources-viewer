@@ -72,5 +72,25 @@ export default {
         resolve(path.join(out, file.basename))
       })
     })
+  },
+  extractAll (archive, out, store) {
+    return new Promise((resolve, reject) => {
+      const rpatool = path.join(__static, '/rpatool.py')
+
+      let config = {
+        args: ['-x', path.normalize(archive), '-o', path.normalize(out)],
+        pythonPath: 'python'
+      }
+
+      if (store.config.useRenpyPython) {
+        config.pythonPath = path.join(store.files.gameDir, store.config.pythonPath)
+        config.pythonOptions = ['-OO']
+      }
+
+      PythonShell.run(rpatool, config, (err, result) => {
+        if (err) throw err
+        resolve(true)
+      })
+    })
   }
 }

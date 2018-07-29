@@ -7,12 +7,16 @@ const dialog = remote.dialog
 const state = {
   gameDir: null,
   files: {},
-  currentFile: null
+  currentFile: null,
+  extractedArchives: []
 }
 
 const mutations = {
   setGameDir (state, dir) {
     state.gameDir = dir
+    state.files = {}
+    state.currentFile = null
+    state.extractedArchives = []
   },
   setFiles (state, files) {
     state.files = files
@@ -22,6 +26,9 @@ const mutations = {
   },
   showFile (state, file) {
     state.currentFile = file
+  },
+  addExtractedArchive (state, archive) {
+    state.extractedArchives.push(archive)
   }
 }
 

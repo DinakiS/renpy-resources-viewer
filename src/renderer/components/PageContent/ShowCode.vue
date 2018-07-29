@@ -42,11 +42,12 @@ export default {
     toggleSearch () {
       this.showSearch = !this.showSearch
     },
-    aceInit () {
+    aceInit (editor) {
       require('brace/ext/searchbox')
       require('brace/theme/tomorrow_night_eighties')
       require('brace/mode/xml')
       require('../../libs/ace-mode-renpy')
+      this.$set(this, 'editor', editor)
     },
     readFile () {
       fs.readFile(this.file, 'utf8', (err, data) => {
@@ -58,6 +59,12 @@ export default {
   },
   created () {
     this.readFile()
+  },
+  mounted () {
+    this.$root.$on('editor gotoLine', num => {
+      this.editor.scrollToLine(num, true, false)
+      this.editor.gotoLine(num, 0, false)
+    })
   }
 }
 </script>

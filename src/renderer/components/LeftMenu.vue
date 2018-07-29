@@ -4,9 +4,18 @@
     <div class='msg problem' v-if="problem">{{problem}}</div>
     <div class='msg loading' v-if="filesLoading">Loading...</div>
 
-    <ul v-if="Object.keys(renpyFiles).length">
+    <search-bar @search="items => searchResult = items" v-if="$store.state.search.showSearch"/>
+
+    <div v-show="mode === 'search'">
+      <ul>
+        <search-item v-for="item in searchResult.results" :query="searchResult.query" :item="item" :key="item.basename"/>
+      </ul>
+    </div>
+
+    <ul v-show="Object.keys(renpyFiles).length && mode === 'files'">
       <menu-item v-for="(file, name) in renpyFiles" :key="file.basename" :name="name" :file="file"></menu-item>
     </ul>
+
   </div>
 </template>
 
@@ -17,15 +26,18 @@ import path from 'path'
 import recursive from 'recursive-readdir'
 
 import MenuItem from './LeftMenu/Item.vue'
+import SearchBar from './LeftMenu/SearchBar.vue'
+import SearchItem from './LeftMenu/SearchItem.vue'
 
 export default {
   name: 'left-menu',
-  components: { MenuItem },
+  components: { MenuItem, SearchBar, SearchItem },
   data () {
     return {
       problem: '',
       filesLoading: false,
-      renpyFiles: {}
+      renpyFiles: {},
+      searchResult: []
     }
   },
   computed: {
@@ -37,6 +49,11 @@ export default {
         left: this.prevFile,
         right: this.nextFile
       }
+    },
+    mode () {
+      if (this.$store.state.search.showSearch) return 'search'
+
+      return 'files'
     }
   },
   watch: {
@@ -44,6 +61,7 @@ export default {
       if (!gameDir) return
 
       this.renpyFiles = {}
+      if (this.$store.state.search.showSearch) this.$store.commit('toggleSearch')
       this.$store.commit('setFiles', {})
       this.$store.commit('showFile', null)
 
@@ -108,11 +126,11 @@ function ignoreFunc (file, stats) {
     color: #fff;
     overflow-y: auto;
     overflow-x: auto;
+    font-family: monospace;
 
     .msg {
       padding: 10px;
       color: #888585;
-      font-family: monospace;
       text-align: center;
     }
 
@@ -123,6 +141,10 @@ function ignoreFunc (file, stats) {
     ul {
       list-style: none;
       padding-left: 0;
+    }
+
+    .text-center {
+      text-align: center;
     }
   }
 </style>

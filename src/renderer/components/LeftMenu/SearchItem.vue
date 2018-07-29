@@ -48,7 +48,7 @@ export default {
       this.$store.commit('showFile', this.item.realPath)
       setTimeout(() => {
         this.$root.$emit('editor gotoLine', search.line.num + 1)
-      }, 500)
+      }, 200)
       console.log(this.item, search)
     }
   },

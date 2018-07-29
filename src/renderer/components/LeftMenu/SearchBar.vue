@@ -1,11 +1,11 @@
 <template>
   <div class='search-bar'>
     <div class="input-wrap">
-      <input type="text" placeholder="Type something and press Enter" v-model="query" class="search" @keyup.enter="startSearch">
-      <button class="close" @click="query = ''; $emit('search', [])">&times;</button>
+      <input type="text" placeholder="Type something and press Enter" v-model="query" class="search" @keyup.enter="startSearch" :disabled="inProgress">
+      <button class="close" @click="query = ''; $emit('search', [])" :disabled="inProgress">&times;</button>
     </div>
     <label>files to include</label>
-    <input type="text" v-model="include" class="search" @keyup.enter="startSearch">
+    <input type="text" v-model="include" class="search" @keyup.enter="startSearch" :disabled="inProgress">
     <div v-if="status !== ''" class="status">{{status}}</div>
   </div>
 </template>
@@ -27,7 +27,8 @@ export default {
       query: '',
       include: '.rpy .rpyc .json .txt',
       result: [],
-      status: ''
+      status: '',
+      inProgress: false
     }
   },
   methods: {
@@ -42,6 +43,7 @@ export default {
         return
       }
       const filters = this.include.split(' ')
+      this.inProgress = true
 
       try {
         const topFiles = Object.keys(this.$store.state.files.files)
@@ -153,9 +155,8 @@ export default {
           searchResult.results.splice(100, searchResult.results.length - 100)
         }
 
+        this.inProgress = false
         this.$emit('search', searchResult)
-
-        console.log(searchResult)
       } catch (err) {
         this.result = []
         throw err

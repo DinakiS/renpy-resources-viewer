@@ -1,8 +1,9 @@
 <template>
   <div class='toolbar'>
-    <button class='btn open' @click="selectGameDir" v-tooltip="{ content: 'Select game folder', placement: 'bottom' }"></button>
-    <button class='btn save' @click="extractFile" v-tooltip="{ content: 'Extract file', placement: 'bottom' }"></button>
+    <button class='btn open' @click="$store.dispatch('changeGameDir')" v-tooltip="{ content: 'Select game folder', placement: 'bottom' }"></button>
+    <button class='btn save' @click="$store.dispatch('extractFile')" v-tooltip="{ content: 'Extract file', placement: 'bottom' }"></button>
     <div class='separator'></div>
+    <button class='btn search' v-if= "$store.state.files.gameDir" @click="$store.commit('toggleSearch')" v-tooltip="{ content: 'Search through all files', placement: 'bottom' }"></button>
     <button
       class='btn console'
       v-if="$store.state.files.gameDir"
@@ -10,7 +11,7 @@
       @click="toggleConsole"
       >
     </button>
-    <button class='btn settings' @click="openSettings" v-tooltip="{ content: 'Settings', placement: 'bottom' }"></button>
+    <button class='btn settings' @click="$store.commit('toggleSettings')" v-tooltip="{ content: 'Settings', placement: 'bottom' }"></button>
   </div>
 </template>
 
@@ -43,15 +44,6 @@ export default {
     }
   },
   methods: {
-    selectGameDir () {
-      this.$store.dispatch('changeGameDir')
-    },
-    extractFile () {
-      this.$store.dispatch('extractFile')
-    },
-    openSettings () {
-      this.$store.commit('toggleSettings')
-    },
     toggleConsole () {
       let fileContent = this.getConsoleFile()
       if (fileContent) {
@@ -119,6 +111,9 @@ export default {
       }
       &.save {
         background-image: url('~@/assets/toolbar/extract.png');
+      }
+      &.search {
+        background-image: url('~@/assets/toolbar/search.png');
       }
       &.console {
         background-image: url('~@/assets/toolbar/terminal.png');
